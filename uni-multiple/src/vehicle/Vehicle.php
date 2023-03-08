@@ -37,15 +37,27 @@ class vehicle
         return $this->technicians;
     }
 
-    public function addTechnician(technician $technicians): self
+    public function addTechnician(technician $technician): bool
     {
-        // coder ici
-        return $this;
+        if(!in_array($technician, $this->technicians, true)) {
+            $this->technicians[] = $technician;
+
+            return true;
+        }
+      
+        return false;
     }
 
-    public function removeTechnician(technician $technicians): self
+    public function removeTechnician(technician $technician): bool
     {
-        //coder ici
-        return $this;
+        $key = array_search($technician, $this->technicians, true);
+
+        if($key) {
+            unset($this->technicians[$key]);
+
+            return true;
+        }
+
+        return false;
     }
 }
