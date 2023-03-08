@@ -15,9 +15,9 @@ class Vehicle
     public function getInfos() : string
     {
         $info = 'Ma plaque d\'immatriculation est le ' . $this->getnumberPlate();
-    
-        if($this->technician) {
-           $info . ' et mon technicien est ' . $this->technician->getName();
+
+        if($this->getTechnician()) {
+           $info .= ' et mon technicien est ' . $this->getTechnician()->getName();
         }
 
         return $info . '.';
@@ -41,7 +41,15 @@ class Vehicle
     }
 
     public function setTechnician(?Technician $technician): self
-    {
+    {        
+        if($technician) {
+           $technician->setVehicle($this); 
+        }
+
+        if($this->getTechnician()) {
+            $this->getTechnician()->setVehicle(null);
+        }
+        
         $this->technician = $technician;
 
         return $this;
