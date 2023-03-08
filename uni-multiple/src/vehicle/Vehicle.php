@@ -6,18 +6,23 @@ use src\technician\Technician as Technician;
 
 class vehicle
 {
-    private string $numberPlate;
-    private array $technicians;
+    private array $technicians = [];
 
-    public function __construct( string $numberPlate, array $technicians)
+    public function __construct(private string $numberPlate, array $technicians)
     {
-        $this->setNumberPlate($numberPlate);
-        $this->technicians = $technicians;
+        $this->setTechnicians($technicians);
     }
 
     public function getInfo(): string
     {
-        return 'Ma plaque d\'immatriculation est le ' . $this->getNumberPlate();
+        $info = 'Ma plaque d\'immatriculation est le ' . $this->getNumberPlate() . '. Les techniciens qui m\'entretiennent sont : ';
+        foreach($this->technicians as $techinician) {
+            $info .= $techinician->getName() . ', ';
+        }
+
+        $info = substr($info, 0, -2);
+    
+        return $info . '.';
     }
 
     public function getNumberPlate(): string
@@ -59,5 +64,12 @@ class vehicle
         }
 
         return false;
+    }
+
+    private function setTechnicians(array $technicians)
+    {
+        foreach($technicians as $technician) {
+            $this->addTechnician($technician);
+        }
     }
 }
